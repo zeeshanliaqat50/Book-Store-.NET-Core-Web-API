@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();  //added newtonsoft for patch http verb
 //registering services
 builder.Services.AddTransient<IBookRepository, BookRepository>();
 //registering DBContext

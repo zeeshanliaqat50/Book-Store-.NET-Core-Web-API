@@ -1,6 +1,7 @@
 ﻿using BookStoreWebAPI.Data;
 using BookStoreWebAPI.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStoreWebAPI.Controllers
@@ -40,8 +41,33 @@ namespace BookStoreWebAPI.Controllers
         {
           var r= await this._bookRepository.UpdateBook(id, book);
 
-            return Ok(r); 
-
+            return Ok(r);
+        }
+        [HttpPatch("{id}")]
+        /***
+         * Patch is used to update some field only not the whole row or record
+         * 
+         * Request's body sample
+         * [
+  {
+    "operationType": 0,
+    "path": "title",   //field name
+    "op": "replace",  
+    "from": "string", 
+    "value": "Updated field"  //new value
+  }
+]
+         */
+        public async Task<IActionResult> UpdateField([FromRoute]int id, [FromBody]JsonPatchDocument book)
+        {
+           await _bookRepository.UpdateField(id, book);
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+           await this._bookRepository.Delete(id);
+            return Ok(id);
 
 
         }
