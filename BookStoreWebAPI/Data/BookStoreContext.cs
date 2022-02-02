@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStoreWebAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreWebAPI.Data
 {
-    public class BookStoreContext : DbContext
+   // public class BookStoreContext : DbContext //to use identityCore, we replace DBContext with IdentityDBContext
+         public class BookStoreContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Book> Books { get; set; }
         public BookStoreContext(DbContextOptions<BookStoreContext> options) : base(options)
